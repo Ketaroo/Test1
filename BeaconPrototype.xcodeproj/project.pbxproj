@@ -15,6 +15,9 @@
 		FB069B041BB7DEEC00DBEC77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB069B021BB7DEEC00DBEC77 /* LaunchScreen.storyboard */; };
 		FB069B0F1BB7DEEC00DBEC77 /* BeaconPrototypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB069B0E1BB7DEEC00DBEC77 /* BeaconPrototypeTests.swift */; };
 		FB069B1A1BB7DEEC00DBEC77 /* BeaconPrototypeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB069B191BB7DEEC00DBEC77 /* BeaconPrototypeUITests.swift */; };
+		FB069B281BB7DFF400DBEC77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB069B271BB7DFF400DBEC77 /* CoreLocation.framework */; };
+		FB069B2B1BB7E0C400DBEC77 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB069B291BB7E0C400DBEC77 /* Reachability.swift */; settings = {ASSET_TAGS = (); }; };
+		FB069B2C1BB7E0C400DBEC77 /* MyCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB069B2A1BB7E0C400DBEC77 /* MyCommunication.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,9 @@
 		FB069B151BB7DEEC00DBEC77 /* BeaconPrototypeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeaconPrototypeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB069B191BB7DEEC00DBEC77 /* BeaconPrototypeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconPrototypeUITests.swift; sourceTree = "<group>"; };
 		FB069B1B1BB7DEEC00DBEC77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB069B271BB7DFF400DBEC77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FB069B291BB7E0C400DBEC77 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		FB069B2A1BB7E0C400DBEC77 /* MyCommunication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCommunication.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB069B281BB7DFF400DBEC77 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +86,7 @@
 		FB069AEA1BB7DEEB00DBEC77 = {
 			isa = PBXGroup;
 			children = (
+				FB069B271BB7DFF400DBEC77 /* CoreLocation.framework */,
 				FB069AF51BB7DEEB00DBEC77 /* BeaconPrototype */,
 				FB069B0D1BB7DEEC00DBEC77 /* BeaconPrototypeTests */,
 				FB069B181BB7DEEC00DBEC77 /* BeaconPrototypeUITests */,
@@ -101,6 +109,8 @@
 			children = (
 				FB069AF61BB7DEEB00DBEC77 /* AppDelegate.swift */,
 				FB069AF81BB7DEEB00DBEC77 /* ViewController.swift */,
+				FB069B291BB7E0C400DBEC77 /* Reachability.swift */,
+				FB069B2A1BB7E0C400DBEC77 /* MyCommunication.swift */,
 				FB069AFA1BB7DEEB00DBEC77 /* Main.storyboard */,
 				FB069B001BB7DEEC00DBEC77 /* Assets.xcassets */,
 				FB069B021BB7DEEC00DBEC77 /* LaunchScreen.storyboard */,
@@ -260,7 +270,9 @@
 			files = (
 				FB069AF91BB7DEEB00DBEC77 /* ViewController.swift in Sources */,
 				FB069AF71BB7DEEB00DBEC77 /* AppDelegate.swift in Sources */,
+				FB069B2B1BB7E0C400DBEC77 /* Reachability.swift in Sources */,
 				FB069AFF1BB7DEEC00DBEC77 /* BeaconPrototype.xcdatamodeld in Sources */,
+				FB069B2C1BB7E0C400DBEC77 /* MyCommunication.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

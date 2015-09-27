@@ -8,18 +8,95 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate{
 
     var window: UIWindow?
-
+    var locationManager: CLLocationManager!
+    var uuid:NSUUID?
+    var beaconRegion:CLBeaconRegion?
+    var mycmAD = MyCommunication()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        //******** 通知用 *********
+        //Notificationを一旦破棄
+        UIApplication.sharedApplication().cancelAllLocalNotifications();
+        
+        //Notificationを使用する準備
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound, UIUserNotificationType.Alert, UIUserNotificationType.Badge], categories: nil))
+        
+        //******** beacon用 *********
+        // iBeaconのIDは適宜書き換えてください
+        self.uuid = NSUUID(UUIDString: "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX")
+        self.beaconRegion = CLBeaconRegion(proximityUUID: self.uuid!, identifier: "テスト")
+        self.locationManager = CLLocationManager()
+        self.locationManager.delegate = self;
+        self.locationManager.requestAlwaysAuthorization() 
+        
         // Override point for customization after application launch.
         return true
     }
 
+    // 位置情報使用許可の認証状態が変わったタイミングで呼ばれるデリゲートメソッド
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        switch status
+        {
+        case .AuthorizedAlways, .AuthorizedWhenInUse:
+            /* 許可された時はiBeaconをOnにする */
+            self.locationManager.startMonitoringForRegion(self.beaconRegion!)
+            break;
+        default:
+            /* 許可されてない */
+            break;
+        }
+    }
+    // 通知を作成する
+    func ufCreateLocalNotification(alertBodyStr: String) {
+        //以下で登録処理
+        let notification = UILocalNotification()
+        notification.fireDate = NSDate(timeIntervalSinceNow: 1);//1秒後
+        notification.timeZone = NSTimeZone.defaultTimeZone()
+        notification.alertBody = alertBodyStr
+        notification.alertAction = "OK"
+        notification.soundName = UILocalNotificationDefaultSoundName
+        UIApplication.sharedApplication().scheduleLocalNotification(notification);
+    }
+    
+    //上記のNotificatioを受け取る関数
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        
+        let alert = UIAlertView();
+        alert.title = "アプリからお知らせ";
+        alert.message = notification.alertBody;
+        alert.addButtonWithTitle(notification.alertAction!);
+        alert.show();
+        
+    }
+    func locationManager(manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        /* 入った際の処理を書く */
+        NSLog("Enter")
+        ufCreateLocalNotification("入ったことを検知。（テスト用に表示しています）")
+
+    }
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        NSLog("Exit")
+        do {
+            let dic = try mycmAD.doPostAndJsonToDic("beaconID=beaconid_test",urlstr: "http://iotibeacont.mybluemix.net/timeSchedule/")
+                // 最近はhttpの接続は許可されない。今回はinfo.plistで許可するように設定している。
+            ufCreateLocalNotification(dic["firstRide"] as! String)
+            
+        }
+        catch {
+            NSLog("領域退出時に想定外エラー")
+            ufCreateLocalNotification("指定領域から退出しました。想定外のエラーで通信できません。")
+        }
+    }
+
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
